@@ -27,7 +27,7 @@ conda activate <ENV_NAME>
 
 If you have multiple conda installations on the system, sourcing `setup_env.sh` ensures you use the one created by `install_conda.sh`.
 
-## Usage — templates 🔧
+## Usage - templates 🔧
 Open a template and edit the variables at the top (job name, time, partition, gpus, conda env, and the command to run).
 - Submit a batch job: `sbatch slurm_job_template.sh`
 - Start an interactive session: `salloc` (see `salloc_interactive_template.sh`)
