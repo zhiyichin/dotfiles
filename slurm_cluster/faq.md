@@ -37,3 +37,22 @@ Add the following to your VSCode `settings.json`:
     "remote.downloadExtensionsLocally": true
 }
 ```
+
+## Read and write to storage is too slow
+**Problem:** Loading checkpoints or data from shared storage (NFS/Lustre) is very slow on compute nodes.
+
+**Solution:** Copy files to local node storage (`$TMPDIR`) at the start of your job script:
+```bash
+cp -r /path/to/checkpoint/ $TMPDIR/
+cp -r /path/to/data/ $TMPDIR/
+```
+Then point your program to `$TMPDIR` instead. Note: `$TMPDIR` is cleaned up when the job ends.
+
+## Passing parameters to a job
+**Problem:** How to pass input parameters to an `sbatch` job.
+
+**Solution:** Use `--export`:
+```bash
+sbatch --export=PARAM1=value1,PARAM2=value2 slurm_job.sh
+```
+Then access them in the script as `${PARAM1}`, `${PARAM2}`, etc.

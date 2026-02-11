@@ -30,7 +30,7 @@ salloc \
     --cpus-per-task="${NUM_CPUS}" \
     --mem="${MEMORY}" \
     --time="${TIME}" \
-    bash -c "
+    srun --pty bash -c "
         echo '=============================================='
         echo 'Interactive session started on node: \$(hostname)'
         echo '=============================================='
@@ -55,6 +55,7 @@ salloc \
 # If you prefer to run commands manually after allocation:
 #
 # salloc --partition=gpu --gres=gpu:1 --cpus-per-task=8 --mem=32G --time=04:00:00
+# srun --pty bash"
 #
 # Then in the allocated shell:
 #   source /path/to/project/setup_env.sh
