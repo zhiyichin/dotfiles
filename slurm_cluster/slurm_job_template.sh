@@ -26,6 +26,17 @@
 # Environment Setup
 # =============================================================================
 
+# --- kerberos ticket ---------------------------------------------------------
+source kauth.sh
+refresh_kerberos() {
+    while true; do
+        sleep 14400
+        bash kauth.sh
+    done
+}
+refresh_kerberos &
+REFRESH_PID=$!
+
 # --- Project configuration ---------------------------------------------------
 PROJECT_DIR="/path/to/your/project"     # CHANGE THIS
 CONDA_ENV="myenv"                        # CHANGE THIS to your env name
@@ -74,6 +85,8 @@ python train.py \
 # =============================================================================
 # Cleanup (optional)
 # =============================================================================
+
+kill ${REFRESH_PID}  # stop the kerberos refresh process
 
 echo ""
 echo "=============================================="

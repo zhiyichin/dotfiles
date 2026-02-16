@@ -27,6 +27,44 @@ conda activate <ENV_NAME>
 
 If you have multiple conda installations on the system, sourcing `setup_env.sh` ensures you use the one created by `install_conda.sh`.
 
+## Kerberos ticket
+**Authentication**
+
+- create a keytab entry
+    ```bash
+    which ktutil # check kerberos tools are installed and available
+    ktutil
+    addent -password -p <USERNAME>@<YOUR.REALM> -k 1 -e aes256-cts # create keytab
+    wkt <FPATH>.keytab # save keytab
+    quit
+    ```
+    - `<USERNAME>@<YOUR.REALM>`: same principal shown by `kinit` in `Password for ...`
+- update [`kauth.sh`](./kauth.sh) with your keytab path and principal
+
+**Automatically renew your ticket while running your job**
+
+- add this at the very start of your job script: `source kauth.sh`
+- run renewal in the background:
+    ```bash
+    refresh_kerberos() {
+        while true; do
+            bash kauth.sh
+            echo "Ticket refreshed via Keytab at $(date)"
+            sleep 14400 # 4 hours
+        done
+    }
+    refresh_kerberos &
+    REFRESH_PID=$!
+    ```
+- cleanup at the end of the run: `kill $REFRESH_PID`
+
+**Check your ticket with `klist`. You should see something like:**
+```bash
+Valid starting       Expires              Service principal
+02/16/2026 08:25:57  02/16/2026 18:25:57  krbtgt/<USERNAME>@<YOUR.REALM>
+	renew until 02/17/2026 08:25:57
+```
+
 ## Usage - templates 🔧
 Open a template and edit the variables at the top (job name, time, partition, gpus, conda env, and the command to run).
 - Submit a batch job: `sbatch slurm_job_template.sh`
