@@ -103,7 +103,7 @@ set background=dark
 " colorscheme tokyonight
 
 " Custom visual improvements (inspired by minimal aesthetic)
-hi Normal guibg=#061a1a guifg=Cyan
+" "hi Normal guibg=#061a1a guifg=Cyan
 hi Comment guifg=White
 hi Constant guifg=White
 hi Function guifg=White
@@ -112,6 +112,9 @@ hi Type guifg=Red gui=bold
 hi Error guibg=Red guifg=White
 hi MatchParen guibg=Blue
 hi linenr guifg=#FFFBAC
+highlight Normal      guibg=NONE ctermbg=NONE
+highlight NonText     guibg=NONE ctermbg=NONE
+highlight EndOfBuffer guibg=NONE ctermbg=NONE
 
 " tab {
     " use space to replace tab
