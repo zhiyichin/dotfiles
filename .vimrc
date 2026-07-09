@@ -241,6 +241,7 @@ map <C-\> <plug>NERDCommenterToggle
 "NerdTree setting
 nnoremap <C-b> :NERDTreeToggle<CR>
 autocmd BufEnter NERD_tree_* | execute 'normal R'
+let NERDTreeShowHidden=1
 
 
 "buffer setting
